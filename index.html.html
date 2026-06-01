@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8C87A;
+  --gold-pale: #F5EDD3;
+  --navy: #0A1628;
+  --navy-mid: #112040;
+  --navy-soft: #1A3060;
+  --cream: #FAF7F2;
+  --cream-dark: #F0EBE1;
+  --text-dark: #1A1408;
+  --text-mid: #4A4035;
+  --text-muted: #8A7A68;
+  --white: #FFFFFF;
+  --border: rgba(201,168,76,0.2);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes barFill {
+  from { width: 0%; }
+}
+@keyframes countUp {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.3); }
+  50%       { box-shadow: 0 0 0 12px rgba(201,168,76,0); }
+}
+@keyframes lineExpand {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+.reveal { opacity: 0; animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) both; }
+.d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.15s; }
+.d3 { animation-delay: 0.25s; } .d4 { animation-delay: 0.35s; }
+.d5 { animation-delay: 0.45s; } .d6 { animation-delay: 0.55s; }
+
+/* ─── LAYOUT ─── */
+.page { max-width: 680px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; }
+
+/* ─── HERO ─── */
+.hero {
+  position: relative;
+  background: var(--navy);
+  border-radius: 24px;
+  overflow: hidden;
+  padding: 3.5rem 2.25rem 3rem;
+  margin-bottom: 2.5rem;
+}
+
+/* ornamental circles */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.15);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.25);
+}
+
+.hero-bg-grad {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 60%, rgba(201,168,76,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 10%, rgba(26,48,96,0.9) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(10,22,40,0.95) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.hero-noise {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.5; pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 1; }
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(201,168,76,0.4);
+  background: rgba(201,168,76,0.08);
+  color: var(--gold-light);
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+  padding: 5px 16px; border-radius: 30px;
+  margin-bottom: 1.5rem;
+}
+.hero-eyebrow span { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); animation: floatY 2s ease infinite; }
+
+.hero-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(28px, 6vw, 42px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.01em;
+}
+
+.hero-title-accent {
+  display: block;
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  font-size: clamp(30px, 6.5vw, 46px);
+  background: linear-gradient(90deg, var(--gold-light), var(--gold), var(--gold-light));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 3.5s linear infinite;
+}
+
+.hero-divider {
+  width: 48px; height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  margin: 1.5rem 0;
+}
+
+.hero-sub {
+  font-size: 14px; font-weight: 300;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.85;
+  max-width: 420px;
+  margin-bottom: 2.25rem;
+}
+
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 2.75rem; }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, #E8C87A, #C9A84C, #A8883C);
+  color: var(--navy);
+  border: none; padding: 13px 28px;
+  border-radius: 12px; font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  letter-spacing: -0.01em;
+  animation: glowPulse 2.5s ease infinite;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.4); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(8px);
+  color: rgba(255,255,255,0.8);
+  border: 1px solid rgba(255,255,255,0.15);
+  padding: 13px 24px;
+  border-radius: 12px; font-size: 14px; font-weight: 400;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: background 0.2s, border-color 0.2s;
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.12); border-color: rgba(201,168,76,0.3); }
+
+/* ─── HERO STATS ─── */
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 1px;
+  background: rgba(201,168,76,0.15);
+  border-radius: 16px; overflow: hidden;
+  border: 1px solid rgba(201,168,76,0.2);
+}
+.hstat {
+  background: rgba(10,22,40,0.8);
+  backdrop-filter: blur(8px);
+  padding: 1rem 0.5rem; text-align: center;
+}
+.hstat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; color: var(--gold-light);
+  display: block; margin-bottom: 4px;
+}
+.hstat-label {
+  font-size: 10px; color: rgba(255,255,255,0.45);
+  line-height: 1.3; font-weight: 300;
+}
+
+/* ─── SECTION WRAPPER ─── */
+.section { margin-bottom: 2.75rem; }
+
+.section-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--gold-pale);
+  color: #7A5F20;
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em;
+  padding: 4px 14px; border-radius: 20px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(201,168,76,0.3);
+}
+
+.section-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 22px; font-weight: 500;
+  color: var(--text-dark);
+  letter-spacing: -0.02em;
+  margin-bottom: 5px;
+}
+
+.section-sub {
+  font-size: 13px; font-weight: 300;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.section-header { margin-bottom: 1.5rem; }
+
+/* center variant */
+.section-header.center { text-align: center; }
+.section-header.center .section-tag { margin-left: auto; margin-right: auto; display: flex; width: fit-content; }
+
+/* ─── ORNAMENTAL LINE ─── */
+.ornament-line {
+  display: flex; align-items: center; gap: 12px;
+  margin: 0.5rem 0 1.5rem;
+}
+.ornament-line::before, .ornament-line::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-pale), transparent);
+}
+.ornament-diamond {
+  width: 6px; height: 6px; background: var(--gold);
+  transform: rotate(45deg); flex-shrink: 0;
+}
+
+/* ─── TARGET CARDS ─── */
+.target-grid {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 10px;
+}
+
+.target-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.25rem 1.1rem;
+  display: flex; align-items: flex-start; gap: 14px;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  cursor: default;
+}
+.target-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(201,168,76,0.12);
+}
+
+.target-icon-wrap {
+  width: 40px; height: 40px; border-radius: 10px;
+  background: var(--gold-pale);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: #7A5F20; font-size: 18px;
+}
+
+.target-text-title {
+  font-size: 13px; font-weight: 600;
+  color: var(--text-dark); margin-bottom: 3px;
+}
+.target-text-desc {
+  font-size: 11.5px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.5;
+}
+
+/* ─── BENEFIT CARDS ─── */
+.benefit-grid {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 12px;
+}
+
+.benefit-card {
+  border-radius: 18px; padding: 1.5rem 1.25rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.25s;
+}
+.benefit-card:hover { transform: translateY(-4px); }
+
+.benefit-card::after {
+  content: '';
+  position: absolute; bottom: -30px; right: -30px;
+  width: 100px; height: 100px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+
+.bc1 { background: linear-gradient(145deg, #0A1628, #1A3060); }
+.bc2 { background: linear-gradient(145deg, #1A2810, #2D5016); }
+.bc3 { background: linear-gradient(145deg, #1A0A28, #3D1A60); }
+.bc4 { background: linear-gradient(145deg, #281A08, #604020); }
+
+.benefit-icon {
+  font-size: 22px; color: var(--gold-light);
+  margin-bottom: 12px; display: block;
+}
+.benefit-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px; font-weight: 500; color: var(--white);
+  margin-bottom: 6px;
+}
+.benefit-desc {
+  font-size: 11.5px; font-weight: 300;
+  color: rgba(255,255,255,0.65); line-height: 1.6;
+}
+
+.benefit-badge {
+  display: inline-block;
+  margin-top: 10px;
+  background: rgba(201,168,76,0.15);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold-light);
+  font-size: 10px; font-weight: 500;
+  padding: 3px 10px; border-radius: 10px;
+}
+
+/* ─── INCOME ─── */
+.income-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 2rem 1.75rem;
+  position: relative; overflow: hidden;
+}
+.income-box::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%;
+  background: linear-gradient(180deg, var(--gold), var(--gold-light));
+}
+
+.income-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 16px; font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.income-title i { color: var(--gold); }
+
+.income-row { margin-bottom: 14px; }
+.income-row-head {
+  display: flex; justify-content: space-between;
+  align-items: baseline; margin-bottom: 7px;
+}
+.income-year {
+  font-size: 12px; font-weight: 500; color: var(--text-mid);
+}
+.income-amount {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px; color: var(--text-dark);
+}
+.income-track {
+  height: 8px; background: var(--cream-dark);
+  border-radius: 8px; overflow: hidden;
+}
+.income-fill {
+  height: 100%; border-radius: 8px;
+  width: 0%; transition: width 1.4s cubic-bezier(0.22,1,0.36,1);
+}
+.fill1 { background: linear-gradient(90deg, #C9A84C, #E8C87A); }
+.fill2 { background: linear-gradient(90deg, #2D6A3F, #4CAF71); }
+.fill3 { background: linear-gradient(90deg, #3D1A60, #7C3AED); }
+.fill4 { background: linear-gradient(90deg, #7A4010, #D97706); }
+
+/* ─── PROCESS ─── */
+.process-wrap {
+  background: var(--navy);
+  border-radius: 20px; padding: 2rem 1.75rem;
+  position: relative; overflow: hidden;
+}
+.process-wrap::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 50% 120%, rgba(201,168,76,0.1), transparent 60%);
+  pointer-events: none;
+}
+
+.proc-track {
+  display: flex; align-items: flex-start;
+  gap: 0; position: relative;
+  margin-top: 1.5rem;
+}
+
+.proc-step {
+  flex: 1; text-align: center; position: relative;
+}
+
+.proc-step:not(:last-child)::after {
+  content: '';
+  position: absolute; top: 20px; left: 50%;
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, rgba(201,168,76,0.5), rgba(201,168,76,0.1));
+  z-index: 0;
+}
+
+.proc-num {
+  width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.5);
+  background: rgba(201,168,76,0.1);
+  color: var(--gold-light);
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 10px; position: relative; z-index: 1;
+}
+
+.proc-title {
+  font-size: 12px; font-weight: 500;
+  color: var(--white); margin-bottom: 3px;
+}
+.proc-desc {
+  font-size: 10.5px; font-weight: 300;
+  color: rgba(255,255,255,0.5); line-height: 1.4;
+}
+
+/* ─── TESTIMONIALS ─── */
+.testimonial-grid {
+  display: grid; gap: 12px;
+}
+
+.tcard {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px; padding: 1.5rem;
+  position: relative; overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.tcard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(201,168,76,0.1);
+}
+.tcard::before {
+  content: '\201C';
+  position: absolute; top: -5px; right: 18px;
+  font-size: 90px; line-height: 1;
+  color: rgba(201,168,76,0.08);
+  font-family: 'DM Serif Display', serif;
+}
+
+.tcard-accent {
+  width: 30px; height: 2px;
+  background: var(--gold);
+  margin-bottom: 14px;
+}
+
+.tcard-text {
+  font-size: 13px; font-weight: 300;
+  color: var(--text-mid);
+  line-height: 1.8; margin-bottom: 16px;
+  font-style: italic;
+}
+
+.tcard-footer { display: flex; align-items: center; justify-content: space-between; }
+
+.tcard-author { display: flex; align-items: center; gap: 12px; }
+
+.avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 600; flex-shrink: 0;
+}
+.av1 { background: linear-gradient(135deg, var(--gold-pale), #EDD89A); color: #7A5F20; }
+.av2 { background: linear-gradient(135deg, #D1FAE5, #A7F3D0); color: #065F46; }
+.av3 { background: linear-gradient(135deg, #EDE9FE, #DDD6FE); color: #5B21B6; }
+
+.author-name {
+  font-size: 13px; font-weight: 600; color: var(--text-dark);
+}
+.author-sub {
+  font-size: 11px; font-weight: 300; color: var(--text-muted);
+}
+
+.tcard-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--gold-pale);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: #7A5F20; font-size: 10px; font-weight: 600;
+  padding: 4px 10px; border-radius: 10px;
+  white-space: nowrap;
+}
+
+/* ─── CTA ─── */
+.cta-section {
+  background: var(--navy);
+  border-radius: 24px; padding: 3rem 2rem;
+  text-align: center; position: relative; overflow: hidden;
+  margin-bottom: 2.5rem;
+}
+
+.cta-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.12);
+}
+.ring1 { width: 300px; height: 300px; top: -150px; right: -100px; }
+.ring2 { width: 200px; height: 200px; top: -100px; right: -50px; }
+.ring3 { width: 400px; height: 400px; bottom: -200px; left: -150px; }
+
+.cta-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: var(--gold-light);
+  font-size: 11px; font-weight: 500;
+  padding: 5px 16px; border-radius: 20px;
+  margin-bottom: 1.25rem;
+}
+
+.cta-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 24px; font-weight: 400;
+  color: var(--white); line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+.cta-title em {
+  font-family: 'DM Serif Display', serif;
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.cta-sub {
+  font-size: 13px; font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 2rem; line-height: 1.7;
+}
+
+.kakao-btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: #FEE500; color: #191919;
+  border: none; padding: 15px 36px;
+  border-radius: 14px;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; letter-spacing: -0.01em;
+  transition: transform 0.2s, box-shadow 0.2s;
+  animation: glowPulse 2.5s ease infinite;
+}
+.kakao-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(254,229,0,0.35); }
+
+.cta-note {
+  font-size: 11px; color: rgba(255,255,255,0.3);
+  margin-top: 14px; font-weight: 300;
+}
+
+/* ─── FAQ ─── */
+.faq-wrap { margin-bottom: 2rem; }
+
+.faq-item {
+  border-bottom: 1px solid var(--cream-dark);
+  overflow: hidden;
+}
+.faq-item:first-child { border-top: 1px solid var(--cream-dark); }
+
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.1rem 0; cursor: pointer; gap: 16px;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 14px; font-weight: 400;
+  color: var(--text-dark);
+  transition: color 0.2s;
+}
+.faq-q:hover { color: #7A5F20; }
+
+.faq-chevron {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--cream-dark);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background 0.2s, transform 0.3s;
+  color: var(--text-muted); font-size: 14px;
+}
+.faq-chevron.open { background: var(--gold-pale); color: #7A5F20; transform: rotate(180deg); }
+
+.faq-a {
+  font-size: 13px; font-weight: 300;
+  color: var(--text-muted); line-height: 1.75;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1), padding 0.4s;
+}
+.faq-a.open { max-height: 220px; padding-bottom: 1.25rem; }
+
+/* ─── FOOTER TRUST ─── */
+.trust-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 24px; flex-wrap: wrap;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--cream-dark);
+}
+.trust-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--text-muted); font-weight: 300;
+}
+.trust-item i { color: var(--gold); font-size: 14px; }
+
+/* ─── FLOATING INDICATOR ─── */
+.live-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(22,163,74,0.1);
+  border: 1px solid rgba(22,163,74,0.25);
+  color: #16A34A;
+  font-size: 11px; font-weight: 500;
+  padding: 5px 14px; border-radius: 20px;
+  margin-bottom: 1.5rem;
+}
+.live-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #16A34A;
+  animation: glowPulse 1.5s ease infinite;
+}
+
+/* ─── QUOTE HIGHLIGHT ─── */
+.highlight-quote {
+  background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+  border-radius: 16px; padding: 1.75rem;
+  margin-bottom: 2.5rem;
+  border-left: 3px solid var(--gold);
+  position: relative; overflow: hidden;
+}
+.highlight-quote::after {
+  content: '\201C';
+  position: absolute; bottom: -20px; right: 16px;
+  font-family: 'DM Serif Display', serif;
+  font-size: 120px; line-height: 1;
+  color: rgba(201,168,76,0.06);
+}
+.quote-text {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 16px; font-weight: 400;
+  color: var(--white); line-height: 1.75;
+  margin-bottom: 12px;
+}
+.quote-attr {
+  font-size: 12px; color: var(--gold-light); font-weight: 500;
+}
+
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero reveal d1">
+    <div class="hero-bg-grad"></div>
+    <div class="hero-noise"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span></span>
+        대한민국 No.1 보험 커리어 플랫폼
+      </div>
+      <h1 class="hero-title">
+        당신의 가능성을
+        <span class="hero-title-accent">현실로 만드세요</span>
+      </h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">
+        자유로운 시간, 무제한 소득, 빠른 성장.<br>
+        보험설계사로 인생의 새로운 챕터를 시작하세요.
+      </p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="openKakao()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.477 3 2 6.477 2 11c0 2.897 1.656 5.437 4.156 6.937l-1.062 3.875 4.5-2.969A11.16 11.16 0 0012 19c5.523 0 10-3.477 10-8S17.523 3 12 3z"/></svg>
+          카카오톡 상담 신청
+        </button>
+        <button class="btn-ghost" onclick="scrollToFaq()">
+          자주 묻는 질문 <i class="ti ti-arrow-down" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="hstat">
+          <span class="hstat-num" id="s1">0</span>
+          <span class="hstat-label">월 평균 수입<br>(만원)</span>
+        </div>
+        <div class="hstat">
+          <span class="hstat-num" id="s2">0%</span>
+          <span class="hstat-label">1년 이상<br>근속율</span>
+        </div>
+        <div class="hstat">
+          <span class="hstat-num" id="s3">0+</span>
+          <span class="hstat-label">활동<br>설계사</span>
+        </div>
+        <div class="hstat">
+          <span class="hstat-num" id="s4">0★</span>
+          <span class="hstat-label">설계사<br>만족도</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="highlight-quote reveal d2">
+    <p class="quote-text">"처음 시작할 때 아무것도 몰랐습니다.<br>지금은 팀을 이끌고, 제 인생의 주인이 되었습니다."</p>
+    <div class="quote-attr">— 박순희 팀장 · 활동 5년차 · MDRT 달성</div>
+  </div>
+
+  <!-- WHO WE SEEK -->
+  <div class="section reveal d2">
+    <div class="section-header">
+      <div class="section-tag">✦ 지원 자격</div>
+      <h2 class="section-title">이런 분께 딱 맞습니다</h2>
+      <p class="section-sub">나이, 성별, 경력에 관계없이 의지 있는 분이라면 누구든 시작할 수 있어요</p>
+    </div>
+    <div class="target-grid">
+      <div class="target-card">
+        <div class="target-icon-wrap"><i class="ti ti-users" aria-hidden="true"></i></div>
+        <div>
+          <div class="target-text-title">누구나 지원 가능</div>
+          <div class="target-text-desc">나이, 성별, 경력 관계없이 모두 환영해요</div>
+        </div>
+      </div>
+      <div class="target-card">
+        <div class="target-icon-wrap"><i class="ti ti-moon" aria-hidden="true"></i></div>
+        <div>
+          <div class="target-text-title">부업 희망자</div>
+          <div class="target-text-desc">주말·저녁 시간으로 추가 수입 창출</div>
+        </div>
+      </div>
+      <div class="target-card">
+        <div class="target-icon-wrap"><i class="ti ti-building" aria-hidden="true"></i></div>
+        <div>
+          <div class="target-text-title">직장인 이직 희망</div>
+          <div class="target-text-desc">안정된 수입 + 자유로운 커리어 전환</div>
+        </div>
+      </div>
+      <div class="target-card">
+        <div class="target-icon-wrap"><i class="ti ti-sun" aria-hidden="true"></i></div>
+        <div>
+          <div class="target-text-title">시니어·은퇴자</div>
+          <div class="target-text-desc">풍부한 인맥과 경험이 강점입니다</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BENEFITS -->
+  <div class="section reveal d3">
+    <div class="section-header">
+      <div class="section-tag">✦ 핵심 혜택</div>
+      <h2 class="section-title">업계 최고 수준의 지원</h2>
+      <p class="section-sub">입사부터 성장까지 모든 과정을 함께합니다</p>
+    </div>
+    <div class="benefit-grid">
+      <div class="benefit-card bc1">
+        <i class="ti ti-clock benefit-icon" aria-hidden="true"></i>
+        <div class="benefit-title">완전 자유 출퇴근</div>
+        <div class="benefit-desc">내 가족, 내 일상을 지키면서 일하세요</div>
+        <div class="benefit-badge">자율 시간제</div>
+      </div>
+      <div class="benefit-card bc2">
+        <i class="ti ti-trending-up benefit-icon" aria-hidden="true"></i>
+        <div class="benefit-title">무제한 소득</div>
+        <div class="benefit-desc">성과에 따른 수수료 + 팀 보너스</div>
+        <div class="benefit-badge">소득 상한 없음</div>
+      </div>
+      <div class="benefit-card bc3">
+        <i class="ti ti-school benefit-icon" aria-hidden="true"></i>
+        <div class="benefit-title">지점신입교육</div>
+        <div class="benefit-desc">연수원 입소부터 자격증 취득까지 체계적으로</div>
+        <div class="benefit-badge">체계적 커리큘럼</div>
+      </div>
+      <div class="benefit-card bc4">
+        <i class="ti ti-plane benefit-icon" aria-hidden="true"></i>
+        <div class="benefit-title">해외 포상 여행</div>
+        <div class="benefit-desc">우수 설계사 매년 해외 인센티브</div>
+        <div class="benefit-badge">연 1회 해외</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INCOME -->
+  <div class="section reveal d3">
+    <div class="income-box">
+      <div class="income-title">
+        <i class="ti ti-trending-up" aria-hidden="true"></i>
+        노력하면 누구나 월 1,000만원 이상
+      </div>
+      <p style="font-size:12.5px;font-weight:300;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.7;">연차나 나이가 아닌, <strong style="color:var(--text-dark);font-weight:600;">당신의 노력</strong>이 수입을 결정합니다.</p>
+      <div class="income-row">
+        <div class="income-row-head">
+          <span class="income-year">😊 &nbsp;기초 활동기</span>
+          <span class="income-amount">월 200만원~</span>
+        </div>
+        <div class="income-track"><div class="income-fill fill1" data-w="25"></div></div>
+      </div>
+      <div class="income-row">
+        <div class="income-row-head">
+          <span class="income-year">💪 &nbsp;본격 성장기</span>
+          <span class="income-amount">월 400만원~</span>
+        </div>
+        <div class="income-track"><div class="income-fill fill2" data-w="50"></div></div>
+      </div>
+      <div class="income-row">
+        <div class="income-row-head">
+          <span class="income-year">🔥 &nbsp;고성과 달성기</span>
+          <span class="income-amount">월 700만원~</span>
+        </div>
+        <div class="income-track"><div class="income-fill fill3" data-w="75"></div></div>
+      </div>
+      <div class="income-row">
+        <div class="income-row-head">
+          <span class="income-year" style="color:#9A6F10;font-weight:700;">👑 &nbsp;누구나 도달 가능</span>
+          <span class="income-amount" style="color:var(--gold);font-size:20px;">월 1,000만원+</span>
+        </div>
+        <div class="income-track" style="height:10px;">
+          <div class="income-fill fill4" data-w="100" style="background:linear-gradient(90deg,#C9A84C,#E8C87A,#C9A84C);background-size:200% auto;animation:shimmer 2s linear infinite;"></div>
+        </div>
+      </div>
+      <div style="margin-top:1.25rem;padding:1rem 1.1rem;background:var(--gold-pale);border-radius:12px;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;gap:10px;">
+        <i class="ti ti-star-filled" style="color:var(--gold);font-size:18px;flex-shrink:0;" aria-hidden="true"></i>
+        <p style="font-size:12px;font-weight:400;color:#7A5F20;line-height:1.6;margin:0;">상위 설계사의 <strong>평균 월 수입 1,200만원 이상</strong>. 시작 시점과 관계없이 노력과 활동량으로 결정됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESS -->
+  <div class="section reveal d4">
+    <div class="process-wrap">
+      <div class="section-header center" style="margin-bottom:0">
+        <div class="section-tag" style="background:rgba(201,168,76,0.12);color:var(--gold-light);border-color:rgba(201,168,76,0.25)">✦ 합류 프로세스</div>
+        <h2 class="section-title" style="color:var(--white)">5단계로 시작하세요</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,0.45)">신청부터 현장 활동까지 빠르고 체계적으로</p>
+      </div>
+      <div class="proc-track">
+        <div class="proc-step">
+          <div class="proc-num">1</div>
+          <div class="proc-title">카카오 상담</div>
+          <div class="proc-desc">5분 채팅 신청</div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">2</div>
+          <div class="proc-title">1:1 면담</div>
+          <div class="proc-desc">비전 & 조건 확인</div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">3</div>
+          <div class="proc-title">연수원 입소</div>
+          <div class="proc-desc">3일 집중 교육</div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">4</div>
+          <div class="proc-title">자격증 취득</div>
+          <div class="proc-desc">생명·손해보험<br>설계사 시험 합격</div>
+        </div>
+        <div class="proc-step">
+          <div class="proc-num">5</div>
+          <div class="proc-title">현장 활동</div>
+          <div class="proc-desc">합격 후 즉시 시작</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section reveal d4">
+    <div class="section-header">
+      <div class="section-tag">✦ 실제 후기</div>
+      <h2 class="section-title">함께하는 설계사 이야기</h2>
+      <p class="section-sub">꾸밈없는 실제 소속 설계사 후기입니다</p>
+    </div>
+    <div class="testimonial-grid">
+      <div class="tcard">
+        <div class="tcard-accent"></div>
+        <p class="tcard-text">육아 때문에 경력이 단절됐는데, 오히려 지금이 제 인생 최고 수입이에요. 아이 학교 행사도 다 챙기면서요.</p>
+        <div class="tcard-footer">
+          <div class="tcard-author">
+            <div class="avatar av1">김</div>
+            <div>
+              <div class="author-name">김지연 설계사</div>
+              <div class="author-sub">활동 3년차</div>
+            </div>
+          </div>
+          <div class="tcard-badge">🏆 월 600만원 달성</div>
+        </div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-accent"></div>
+        <p class="tcard-text">처음엔 반신반의했는데, 체계적인 지점신입교육 덕분에 첫 달부터 계약을 성사시켰어요. 교육 과정이 정말 달랐습니다.</p>
+        <div class="tcard-footer">
+          <div class="tcard-author">
+            <div class="avatar av2">이</div>
+            <div>
+              <div class="author-name">이준혁 설계사</div>
+              <div class="author-sub">활동 1년차</div>
+            </div>
+          </div>
+          <div class="tcard-badge">🏆 신인상 수상</div>
+        </div>
+      </div>
+      <div class="tcard">
+        <div class="tcard-accent"></div>
+        <p class="tcard-text">퇴직 후 막막했는데 지금은 후배들을 이끄는 팀장이 됐어요. 나이는 정말 상관없더라고요.</p>
+        <div class="tcard-footer">
+          <div class="tcard-author">
+            <div class="avatar av3">박</div>
+            <div>
+              <div class="author-name">박순희 팀장</div>
+              <div class="author-sub">활동 5년차</div>
+            </div>
+          </div>
+          <div class="tcard-badge">🏆 MDRT 달성</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section reveal d5">
+    <div class="cta-ring ring1"></div>
+    <div class="cta-ring ring2"></div>
+    <div class="cta-ring ring3"></div>
+    <div style="position:relative;z-index:1">
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        평균 응답시간 30분 이내
+      </div>
+      <h2 class="cta-title">
+        지금 바로 카카오톡으로<br>
+        <em>무료 상담</em> 받으세요
+      </h2>
+      <p class="cta-sub">부담 없이 물어보세요.<br>강요 없는 진심 상담을 약속드립니다.</p>
+      <button class="kakao-btn" onclick="openKakao()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#191919"><path d="M12 3C6.477 3 2 6.477 2 11c0 2.897 1.656 5.437 4.156 6.937l-1.062 3.875 4.5-2.969A11.16 11.16 0 0012 19c5.523 0 10-3.477 10-8S17.523 3 12 3z"/></svg>
+        카카오톡 채널 상담 시작하기
+      </button>
+      <p class="cta-note">카카오톡 앱이 자동으로 실행됩니다</p>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-wrap reveal d5" id="faq-section">
+    <div class="section-header">
+      <div class="section-tag">✦ FAQ</div>
+      <h2 class="section-title">자주 묻는 질문</h2>
+    </div>
+    <div id="faq"></div>
+  </div>
+
+  <!-- TRUST ROW -->
+  <div class="trust-row reveal d6">
+    <div class="trust-item"><i class="ti ti-shield-check"></i> 금융감독원 등록 GA</div>
+    <div class="trust-item"><i class="ti ti-lock"></i> 개인정보 보호</div>
+    <div class="trust-item"><i class="ti ti-star"></i> 설계사 만족도 4.8</div>
+    <div class="trust-item"><i class="ti ti-users"></i> 4,000+ 활동 설계사</div>
+  </div>
+
+</div><!-- .page -->
+
+<script>
+// ─── FAQ DATA ───
+const faqs = [
+  {
+    q: "경력이 없어도 지원 가능한가요?",
+    a: "전혀 문제없습니다. 보험 지식이 전혀 없어도 시작할 수 있도록 지점신입교육 과정을 운영하며, 연수원 입소 후 생명·손해보험 설계사 시험까지 체계적으로 지원합니다."
+  },
+  {
+    q: "수입이 불규칙하지 않나요?",
+    a: "입사 첫 6개월은 기본급 지원 제도가 있어 안정적으로 시작할 수 있습니다. 이후 수수료 + 팀 보너스로 평균 월 400만원 이상을 달성하는 분이 80% 이상입니다."
+  },
+  {
+    q: "시간은 얼마나 투자해야 하나요?",
+    a: "완전 자율 출퇴근으로 본인이 결정합니다. 파트타임 주 3일부터 풀타임까지 모두 가능합니다. 단, 교육 기간은 일정 시간 참석이 필요합니다."
+  },
+  {
+    q: "어떤 보험회사 소속인가요?",
+    a: "특정 회사에 전속되지 않는 GA(법인보험대리점) 소속입니다. 삼성, 한화, 교보 등 주요 보험사 상품을 모두 취급해 고객에게 최적 상품을 추천할 수 있습니다."
+  },
+  {
+    q: "카카오톡 상담은 어떻게 진행되나요?",
+    a: "채널 추가 후 간단한 정보를 남겨주시면 전담 매니저가 30분 내 연락드립니다. 부담 없이 궁금한 점을 물어보세요."
+  }
+];
+
+const faqEl = document.getElementById('faq');
+faqs.forEach((f, i) => {
+  const d = document.createElement('div');
+  d.className = 'faq-item';
+  d.innerHTML = `
+    <div class="faq-q" onclick="toggleFaq(${i})" role="button" aria-expanded="false">
+      <span>${f.q}</span>
+      <div class="faq-chevron" id="chev${i}"><i class="ti ti-chevron-down" aria-hidden="true"></i></div>
+    </div>
+    <div class="faq-a" id="fa${i}">${f.a}</div>
+  `;
+  faqEl.appendChild(d);
+});
+
+function toggleFaq(i) {
+  const a = document.getElementById('fa' + i);
+  const c = document.getElementById('chev' + i);
+  const isOpen = a.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(e => e.classList.remove('open'));
+  document.querySelectorAll('.faq-chevron').forEach(e => e.classList.remove('open'));
+  if (!isOpen) { a.classList.add('open'); c.classList.add('open'); }
+}
+
+function openKakao() {
+  window.open('http://pf.kakao.com/_NSIxjX/chat', '_blank');
+}
+
+function scrollToFaq() {
+  document.getElementById('faq-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── COUNT UP ───
+function animateCount(el, target, suffix, duration) {
+  let start = 0, step = target / 60;
+  const t = setInterval(() => {
+    start = Math.min(start + step, target);
+    el.textContent = Math.round(start).toLocaleString() + suffix;
+    if (start >= target) clearInterval(t);
+  }, duration / 60);
+}
+
+setTimeout(() => {
+  animateCount(document.getElementById('s1'), 487, '만', 1500);
+  animateCount(document.getElementById('s2'), 92, '%', 1500);
+  animateCount(document.getElementById('s3'), 4000, '+', 1500);
+  setTimeout(() => { document.getElementById('s4').textContent = '4.8★'; }, 800);
+}, 400);
+
+// ─── INCOME BARS ───
+setTimeout(() => {
+  document.querySelectorAll('.income-fill').forEach(b => {
+    b.style.width = b.dataset.w + '%';
+  });
+}, 600);
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.animationPlayState = 'running';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => {
+  el.style.animationPlayState = 'paused';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
